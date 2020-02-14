@@ -1,0 +1,338 @@
+bmc@bmc-R2-1208R-EV:~/workspace/demo/helloworlddeb$ debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -i -I
+dpkg-buildpackage: source package helloworld
+dpkg-buildpackage: source version 0.1
+dpkg-buildpackage: source distribution unstable
+dpkg-buildpackage: source changed by bmc <timchen@ingrasys.com>
+ dpkg-source -i -I --before-build helloworlddeb
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean
+   dh_testdir
+   dh_auto_clean
+        make -j1 distclean
+make[1]: Entering directory '/home/bmc/workspace/demo/helloworlddeb'
+rm -f src/hello
+make[1]: Leaving directory '/home/bmc/workspace/demo/helloworlddeb'
+   dh_clean
+ dpkg-source -i -I -b helloworlddeb
+dpkg-source: info: using source format '3.0 (native)'
+dpkg-source: info: building helloworld in helloworld_0.1.tar.xz
+dpkg-source: info: building helloworld in helloworld_0.1.dsc
+ debian/rules build
+dh build
+   dh_testdir
+   dh_update_autotools_config
+   dh_auto_configure
+   dh_auto_build
+        make -j1
+make[1]: Entering directory '/home/bmc/workspace/demo/helloworlddeb'
+# CFLAGS=-g -O2 -fstack-protector-strong -Wformat
+# -Werror=format-security
+cc -Wdate-time -D_FORTIFY_SOURCE=2 -g -O2 -fstack-protector-strong -Wformat -Werror=format-security  -o src/hello src/hello.c
+make[1]: Leaving directory '/home/bmc/workspace/demo/helloworlddeb'
+   dh_auto_test
+ fakeroot debian/rules binary
+dh binary
+   dh_testroot
+   dh_prep
+   dh_auto_install
+        make -j1 install DESTDIR=/home/bmc/workspace/demo/helloworlddeb/debian/helloworld AM_UPDATE_INFO_DIR=no
+make[1]: Entering directory '/home/bmc/workspace/demo/helloworlddeb'
+install -D src/hello \
+        /home/bmc/workspace/demo/helloworlddeb/debian/helloworld/bin/hello
+make[1]: Leaving directory '/home/bmc/workspace/demo/helloworlddeb'
+   dh_installdocs
+   dh_installchangelogs
+   dh_perl
+   dh_link
+   dh_strip_nondeterminism
+   dh_compress
+   dh_fixperms
+   dh_strip
+   dh_makeshlibs
+   dh_shlibdeps
+   dh_installdeb
+   dh_gencontrol
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package 'helloworld' in '../helloworld_0.1_amd64.deb'.
+ dpkg-genchanges  >../helloworld_0.1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -i -I --after-build helloworlddeb
+dpkg-buildpackage: full upload; Debian-native package (full source is included)
+Now running lintian...
+E: helloworld changes: bad-distribution-in-changes-file unstable
+N:
+N:    You've specified an unknown target distribution for your upload in the
+N:    debian/changelog file. It is possible that you are uploading for a
+N:    different distribution than the one Lintian is checking for. In that
+N:    case, passing --profile $VENDOR may fix this warning.
+N:
+N:    Note that the distributions non-free and contrib are no longer valid.
+N:    You'll have to use distribution unstable and Section: non-free/xxx or
+N:    Section: contrib/xxx instead.
+N:
+N:    Refer to Debian Policy Manual section 5.6.14 (Distribution) for details.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: changes-file, Type: changes
+N:
+W: helloworld source: dh-make-template-in-source debian/helloworld.cron.d.ex
+N:
+N:    This package contains debian/*.ex and/or debian/ex.* files installed by
+N:    dh_make. These are intended to be filled in with the package's details
+N:    and renamed for use by various debhelper commands. If they are not being
+N:    used, they should be removed.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: debhelper, Type: source
+N:
+W: helloworld source: dh-make-template-in-source debian/helloworld.default.ex
+W: helloworld source: dh-make-template-in-source debian/helloworld.doc-base.EX
+W: helloworld source: dh-make-template-in-source debian/init.d.ex
+W: helloworld source: dh-make-template-in-source debian/manpage.1.ex
+W: helloworld source: dh-make-template-in-source debian/manpage.sgml.ex
+W: helloworld source: dh-make-template-in-source debian/manpage.xml.ex
+W: helloworld source: dh-make-template-in-source debian/menu.ex
+W: helloworld source: dh-make-template-in-source debian/postinst.ex
+W: helloworld source: dh-make-template-in-source debian/postrm.ex
+W: helloworld source: dh-make-template-in-source debian/preinst.ex
+W: helloworld source: dh-make-template-in-source debian/prerm.ex
+W: helloworld source: superfluous-clutter-in-homepage <insert the upstream URL, if relevant>
+N:
+N:    The "Homepage:" field in this package's control file contains
+N:    superfluous markup around the URL, like enclosing < and >. This is
+N:    unnecessary and needlessly complicates using this information.
+N:
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: helloworld source: bad-homepage <insert the upstream URL, if relevant>
+N:
+N:    The "Homepage:" field in this package's control file does not contain a
+N:    valid absolute URL. Most probably you forgot to specify the scheme (e.g.
+N:    http).
+N:
+N:    This tag is also triggered if the scheme is not known by Lintian.
+N:
+N:    Please file a bug against Lintian, if this tag is triggered for a valid
+N:    homepage URL.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: helloworld source: out-of-date-standards-version 3.9.6 (current is 3.9.7)
+N:
+N:    The source package refers to a Standards-Version older than the one that
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Version
+N:    control field. However, please remember to update this field next time
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
+N:
+I: helloworld: hardening-no-pie bin/hello
+N:
+N:    This package provides an ELF executable that was not compiled as a
+N:    position independent executable (PIE).
+N:
+N:    PIE is required for fully enabling Address Space Layout Randomization
+N:    (ASLR), which makes "Return-oriented" attacks more difficult.
+N:
+N:    Historically, PIE has been associated with noticeable performance
+N:    overhead on i386. However, GCC-5 has implemented an optimization that
+N:    can reduce the overhead significantly.
+N:
+N:    If you use dpkg-buildflags, you may have to add hardening=+pie or
+N:    hardening=+all to DEB_BUILD_MAINT_OPTIONS.
+N:
+N:    The relevant compiler flags must be passed both to the compiler and the
+N:    linker (e.g. for C that would be commonly be CFLAGS and LDFLAGS).
+N:
+N:    CAVEAT: Please keep in mind that the PIE flag (-fPIE) is not suitable
+N:    for all cases:
+N:
+N:     * It is <not> compatible with -fPIC which required for
+N:       compiling shared libraries.
+N:     * It is unlikely to work when compiling static libraries or
+N:       executables (gcc -static).
+N:
+N:    If your upstream build compiles either of the above, you may have to
+N:    patch the build to ensure that only ELF executables are compiled with
+N:    PIE.
+N:
+N:    Refer to https://wiki.debian.org/Hardening,
+N:    https://gcc.gnu.org/gcc-5/changes.html, and
+N:    https://software.intel.com/en-us/blogs/2014/12/26/new-optimizations-for-x86-in-upcoming-gcc-50-32bit-pic-mode
+N:    for details.
+N:
+N:    Severity: wishlist, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+I: helloworld: hardening-no-bindnow bin/hello
+N:
+N:    This package provides an ELF binary that lacks the "bindnow" linker
+N:    flag.
+N:
+N:    If the ELF binary does not rely on late binding of symbols (e.g. weak
+N:    symbols), then please consider enabling this feature. Otherwise, please
+N:    consider overriding the tag (possibly with a comment about why).
+N:
+N:    If you use dpkg-buildflags, you may have to add hardening=+bindnow or
+N:    hardening=+all to DEB_BUILD_MAINT_OPTIONS.
+N:
+N:    The relevant compiler flags are set in LDFLAGS.
+N:
+N:    Refer to https://wiki.debian.org/Hardening for details.
+N:
+N:    Severity: wishlist, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+E: helloworld: helper-templates-in-copyright
+N:
+N:    The /usr/share/doc/<pkg>/copyright file still contains template markers
+N:    from a packaging helper. Please fill in the actual license, upstream
+N:    copyright holders, and download information about the package and remove
+N:    any remaining templates generated by the packaging helper.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: helloworld: copyright-has-url-from-dh_make-boilerplate
+N:
+N:    There is "url://example.com" in your copyright file. This was most
+N:    likely a remnant from the dh_make template.
+N:
+N:    Make sure you include the real location where you obtained the upstream
+N:    sources (if any).
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information) for
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+E: helloworld: copyright-contains-dh_make-todo-boilerplate
+N:
+N:    The string "Please also look if..." appears in the copyright file, which
+N:    indicates that you either didn't check the whole source to find
+N:    additional copyright/license, or that you didn't remove that paragraph
+N:    after having done so.
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information) for
+N:    details.
+N:
+N:    Severity: serious, Certainty: possible
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: helloworld: readme-debian-contains-debmake-template
+N:
+N:    The README.Debian file installed by this package contains one of the
+N:    template phrases from the README.Debian provided by deb-make or dh_make:
+N:
+N:     Comments regarding the package
+N:     So far nothing to say
+N:     <possible notes regarding this package - if none, delete this file>
+N:
+N:    If there is real information in the file, please delete any generic
+N:    template phrases. If there is nothing to say in the file, it is best
+N:    removed.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: debian-readme, Type: binary
+N:
+E: helloworld: description-is-dh_make-template
+N:
+N:    The synopsis or the extended description has not been changed from the
+N:    template provided by dh_make.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: helloworld: extended-description-is-probably-too-short
+N:
+N:    The extended description (the lines after the first line of the
+N:    "Description:" field) is only one or two lines long. The extended
+N:    description should provide a user with enough information to decide
+N:    whether they want to install this package, what it contains, and how it
+N:    compares to similar packages. One or two lines is normally not enough to
+N:    do this.
+N:
+N:    Refer to Debian Developer's Reference section 6.2.1 (General guidelines
+N:    for package descriptions) and Debian Developer's Reference section 6.2.3
+N:    (The long description) for details.
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+E: helloworld: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unknown.
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct section.
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: helloworld: superfluous-clutter-in-homepage <insert the upstream URL, if relevant>
+W: helloworld: bad-homepage <insert the upstream URL, if relevant>
+W: helloworld: binary-without-manpage bin/hello
+N:
+N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games should
+N:    have a manual page
+N:
+N:    Note that though the man program has the capability to check for several
+N:    program names in the NAMES section, each of these programs should have
+N:    its own manual page (a symbolic link to the appropriate manual page is
+N:    sufficient) because other manual page viewers such as xman or tkman
+N:    don't support this.
+N:
+N:    If the name of the man page differs from the binary by case, man may be
+N:    able to find it anyway; however, it is still best practice to make the
+N:    case of the man page match the case of the binary.
+N:
+N:    If the man pages are provided by another package on which this package
+N:    depends, lintian may not be able to determine that man pages are
+N:    available. In this case, after confirming that all binaries do have man
+N:    pages after this package and its dependencies are installed, please add
+N:    a lintian override.
+N:
+N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+Finished running lintian.

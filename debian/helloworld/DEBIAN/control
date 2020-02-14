@@ -1,0 +1,11 @@
+Package: helloworld
+Version: 0.1
+Architecture: amd64
+Maintainer: bmc <timchen@ingrasys.com>
+Installed-Size: 18
+Depends: libc6 (>= 2.2.5)
+Section: unknown
+Priority: optional
+Homepage: <insert the upstream URL, if relevant>
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
