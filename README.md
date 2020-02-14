@@ -6,6 +6,7 @@ Refer to this workflow:
 
 1. [Use dh_make to generate debian folder](#use-dh_make-to-generate-debian-folder)
 2. [Add hello world](#add-hello-world)
+3. [debuild](#debuild)
 
 ## Use dh_make to generate debian folder
 
@@ -90,7 +91,7 @@ Tree:
 ## debuild
 
 * run `debuild` to prepare deb files
-* build log => [debian_workflow.png](debian_workflow.png)
+* build log => [debuild.log](debuild.log)
 * Notes:
     * deb / des / ... are placed in parent folder
 
@@ -154,3 +155,5 @@ Tree:
         ├── hello                                   <==================== new
         └── hello.c
 ```
+
+=> [Result commit](https://github.com/timmy00274672/demo_dh_make/commit/10fb30104ff5e897e2adbaeadd56014f6a4646c5)
