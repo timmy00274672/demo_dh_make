@@ -7,6 +7,7 @@ Refer to this workflow:
 1. [Use dh_make to generate debian folder](#use-dh_make-to-generate-debian-folder)
 2. [Add hello world](#add-hello-world)
 3. [debuild](#debuild)
+4. [Convert to quilt format](#convert-to-quilt-format)
 
 ## Use dh_make to generate debian folder
 
@@ -157,3 +158,43 @@ Tree:
 ```
 
 => [Result commit](https://github.com/timmy00274672/demo_dh_make/commit/10fb30104ff5e897e2adbaeadd56014f6a4646c5)
+
+## Convert to quilt format
+
+Steps:
+
+```
+debuild # 
+cp ../helloworld_0.1.tar.xz ../helloworld_0.1.orig.tar.xz 
+echo '3.0 (quilt)' > debian/source/format
+dch 'Switch to dpkg-source 3.0 (quilt) format'
+debuild
+```
+
+Result:
+
+```diff
+diff --git a/debian/changelog b/debian/changelog
+old mode 100644
+new mode 100755
+index 12554c6..bf36f78
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,3 +1,9 @@
++helloworld (0.1) UNRELEASED; urgency=medium
++
++  * Switch to dpkg-source 3.0 (quilt) format
++
++ -- Tim Chen <timchen@ingrasys.com>  Mon, 17 Feb 2020 08:29:52 +0800
++
+ helloworld (0.1) unstable; urgency=medium
+
+   * Initial Release.
+diff --git a/debian/source/format b/debian/source/format
+index 89ae9db..163aaf8 100644
+--- a/debian/source/format
++++ b/debian/source/format
+@@ -1 +1 @@
+-3.0 (native)
++3.0 (quilt)
+```
