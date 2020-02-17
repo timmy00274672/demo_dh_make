@@ -198,3 +198,7 @@ index 89ae9db..163aaf8 100644
 -3.0 (native)
 +3.0 (quilt)
 ```
+
+Reference: [DebSrc3.0](https://wiki.debian.org/Projects/DebSrc3.0)
+
+=> [Result commit](https://github.com/timmy00274672/demo_dh_make/commit/fe22cb569868d5f587c345c263310b4f8543b86a)
